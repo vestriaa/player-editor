@@ -1759,12 +1759,7 @@
                 if (levelId) {
                     const formattedLevelId = levelId.replace(':', '/');
 
-                    fetch(`https://api.slin.dev/grab/v1/details/${formattedLevelId}/`)
-                        .then(response => response.json())
-                        .then(levelDetails => {
-                            const iteration = levelDetails.iteration;
-
-                    fetch(`https://api.slin.dev/grab/v1/download/${formattedLevelId}/${iteration}`)
+                    fetch(`https://api.slin.dev/grab/v1/download/${formattedLevelId}/1`)
                         .then(response => response.arrayBuffer())
                         .then(levelData => {
                             new LevelLoader(scene).loadLevel(levelData);
