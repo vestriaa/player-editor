@@ -40,6 +40,22 @@
             background-color: #333;
         }
 
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropbtn {
+            background-color: #1a1a1a;
+            color: #e1e1e1;
+            padding: 10px 15px;
+            font-size: 14px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
         .dropdown-content {
             display: none;
             position: absolute;
@@ -47,11 +63,21 @@
             min-width: 180px;
             border-radius: 6px;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-            margin-top: 5px;
-            border: 1px solid #333;
             z-index: 20;
+            border: 1px solid #333;
         }
 
+        .dropdown:hover>.dropdown-content {
+            display: block;
+        }
+
+        .dropbtn:hover,
+        .dropdown:hover>.dropbtn {
+            background-color: #333;
+        }
+
+        .dropdown-content a,
+        .dropdown-content span,
         .dropdown-content button {
             color: #e1e1e1;
             padding: 12px 16px;
@@ -59,11 +85,37 @@
             display: block;
             width: 100%;
             text-align: left;
-            border-radius: 0;
+            background: none;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
         }
 
-        .dropdown:hover .dropdown-content {
-            display: block;
+        .dropdown-content a:hover,
+        .dropdown-content button:hover {
+            background-color: #333;
+        }
+/*future me remove this*/
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #1a1a1a;
+            padding: 12px;
+            z-index: 11;
+            display: flex;
+            gap: 20px;
+            border-bottom: 1px solid #333;
+        }
+
+        .dropdown-content .dropdown {
+            width: 100%;
+        }
+
+        .dropdown-content .dropdown-content {
+            left: 100%;
+            top: 0;
+            margin-top: 0;
         }
 
         #canvas-container {
@@ -207,6 +259,7 @@
             text-align: center;
             /* Fixed width */
         }
+
         .grid-item-2 {
             border: 1px solid #ddd;
             border-radius: 8px;
@@ -393,7 +446,21 @@
 
 
         <button onclick="handleSettings()">Settings</button>
-        <button onclick="handleHelp()">Help</button>
+        <div class="dropdown">
+            <button class="dropbtn">Help</button>
+
+            <div class="dropdown-content">
+                <div class="dropdown">
+                    <button class="dropbtn">Thanks!</button>
+                    <div class="dropdown-content">
+                        <span>Index</span>
+                        <span>Slin</span>
+                        <span>Vestria</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </nav>
 
     <div id="characterPopup">
@@ -1484,21 +1551,21 @@
                             action.play();
                         });
                     }
-                    
-                const bbox = new THREE.Box3().setFromObject(modelGroup);
-                const size = new THREE.Vector3();
-                bbox.getSize(size);
 
-                const center = new THREE.Vector3();
-                bbox.getCenter(center);
-                modelGroup.position.sub(center);
+                    const bbox = new THREE.Box3().setFromObject(modelGroup);
+                    const size = new THREE.Vector3();
+                    bbox.getSize(size);
 
-                const maxDim = Math.max(size.x, size.y, size.z);
-                const fov = camera.fov * (Math.PI / 180);
-                const distance = (maxDim / 2) / Math.tan(fov / 2) * 1.1;
+                    const center = new THREE.Vector3();
+                    bbox.getCenter(center);
+                    modelGroup.position.sub(center);
 
-                camera.position.z = distance;
-                camera.lookAt(scene.position);
+                    const maxDim = Math.max(size.x, size.y, size.z);
+                    const fov = camera.fov * (Math.PI / 180);
+                    const distance = (maxDim / 2) / Math.tan(fov / 2) * 1.1;
+
+                    camera.position.z = distance;
+                    camera.lookAt(scene.position);
 
 
                     scene.add(finalModel);
