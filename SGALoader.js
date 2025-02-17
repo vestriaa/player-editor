@@ -153,6 +153,9 @@ class SGALoader extends THREE.Loader {
                 console.warn(`Animation ${animName} has no valid tracks and was skipped.`);
             }
         }
+        console.log('Skeleton:', skeleton);
+        console.log('Clips:', clips);
+        console.log('Bone Info:', boneInfo);
         return { skeleton, clips, boneInfo };
     }
 }
